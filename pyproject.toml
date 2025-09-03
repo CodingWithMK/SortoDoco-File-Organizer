@@ -4,4 +4,19 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "typer",
+    "watchdog",
+    "send2trash",
+    "rich"
+]
+
+[tool.uv]
+
+[tool.uv.scripts]
+run = "python -m src.app"
+gui = "python -m src.ui.main_mainwindow"
+test = "pytest -q"
+plan = "python -m src.app plan"
+apply = python -m src.app apply"
+undo = "python -m src.app undo"
