@@ -1,5 +1,5 @@
 '''
-This script is to organize the download files in the Downloads folder by their extensions.
+This script is to organizes the download files in the Downloads folder by their extensions.
 Every run of the script will create a folder for each category with the current date and the name of the category.
 After that, the program will move the files to the corresponding folder.
 '''
@@ -39,7 +39,7 @@ class DownloadsFolderOrganizer:
             date_folder = os.path.join(self.downloads_folder, category, datetime.datetime.now().strftime(f"{category} %Y-%m-%d_%H-%M-%S"))
             if not os.path.exists(date_folder):
                 os.makedirs(date_folder)
-            return date_folder
+        return date_folder
         
     def move_files_to_date_folders(self, date_folder):
         for category, extensions in self.extensions.items():
