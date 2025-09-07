@@ -11,19 +11,44 @@ def unique_target(dst: Path) -> Path:
     """
     if not dst.exists():
         return dst
-    i = 1
-    try:
-        if dst.exists():
-            base_name, _ = os.path.splitext(dst)
-            
-            dst.rename(f"{dst + i}")
-            i += 1
-        else:
-            dst.rename(f"{dst + i}")
-                 
-    except Exception as e:
-        raise FileExistsError("File {dst} already exists. Try to rename...")
     
-        
+    parent = dst.parent
+    stem = dst.stem
+    suffix = dst.suffix
 
-# TODO: Collision for unique filename
+    i = 1
+    while True:
+        candidate = parent / f"{stem} ({i}){suffix}"
+
+        if not candidate.exists():
+            return candidate
+        
+        i += 1
+
+
+def apply_plan(plan: Plan) -> dict:
+    """
+    Performs all Ops and and reports every action:
+    {"moved": N, "skipped": M, errors: [(src, reason), ...]}
+    """
+
+    report = {"moved": 0, "skipped": 0, "errors": []}
+    for op in plan.ops:
+        if op.kindd != "move":
+            report["skipped"] += 1
+            continue
+
+        try:
+            target = unique_target(op.dst)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            
+            shutil.move(str(op.src), str(target))
+            report["moved"] += 1
+        except PermissionError as e:
+            report["errors"].append((str(op.src), f"Permission: {e}"))
+        except FileNotFoundError as e:
+            report["errors"].append((str(op.src), f"NotFound: {e}"))
+        except Exception as e:
+            report["errors"].append((str(op.src), f"Error: {e}"))
+        
+    return report
