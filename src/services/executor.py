@@ -34,7 +34,7 @@ def apply_plan(plan: Plan) -> dict:
 
     report = {"moved": 0, "skipped": 0, "errors": []}
     for op in plan.ops:
-        if op.kindd != "move":
+        if op.kind != "move":
             report["skipped"] += 1
             continue
 
@@ -45,10 +45,12 @@ def apply_plan(plan: Plan) -> dict:
             shutil.move(str(op.src), str(target))
             report["moved"] += 1
         except PermissionError as e:
-            report["errors"].append((str(op.src), f"Permission: {e}"))
+            report["errors"].append((str(op.src), f"permission: {e}"))
         except FileNotFoundError as e:
-            report["errors"].append((str(op.src), f"NotFound: {e}"))
+            report["errors"].append((str(op.src), f"notfound: {e}"))
         except Exception as e:
-            report["errors"].append((str(op.src), f"Error: {e}"))
+            report["errors"].append((str(op.src), f"error: {e}"))
+
+        # TODO: report for conflicts (useful for GUI-feedback)
         
     return report
