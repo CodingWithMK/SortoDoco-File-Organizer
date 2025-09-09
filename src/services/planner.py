@@ -43,4 +43,4 @@ def plan_downloads(downloads_dir: Path, rules_path: Path) -> Plan:
         ops.append(Operation(kind="move", src=entry, dst=dst_path))
         summary[category] += 1
 
-        return Plan(session_ts=session_ts, ops=ops, summary=summary)
+    return Plan(session_ts=session_ts, ops=ops, summary=summary)

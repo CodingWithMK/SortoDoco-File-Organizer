@@ -11,7 +11,7 @@ def ensure_session_dirs(downloads_dir: Path,
     mapping: dict[str, Path] = {}
     
     for category in categories:
-        session_dir = downloads_dir / category / session_dir
+        session_dir: Path = downloads_dir / category / session_ts
         session_dir.mkdir(parents=True, exist_ok=True)
         mapping[category] = session_dir
     
