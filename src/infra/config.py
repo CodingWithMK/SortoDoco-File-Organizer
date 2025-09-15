@@ -1,5 +1,19 @@
 from pathlib import Path
 import json
+from domain.ignore_rules import IgnoreRules
+
+BUILTIN_IGNORE = IgnoreRules(
+    suffixes=(".crdownload", ".part", ".tmp", ".download"),
+    names=("desktop.ini", ".ds_store", "thumbs.db"),
+    globs=("~$*", ".~lock.*#"),
+    hidden=True,
+)
+
+def load_ignore_rules(config_path: Path | None) -> IgnoreRules:
+    user = IgnoreRules()
+
+def _normalize_rules(r:IgnoreRules) -> IgnoreRules:
+    pass
 
 def load_rules(json_path: Path) -> dict[str, list[str]]:
 

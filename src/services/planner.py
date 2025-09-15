@@ -6,32 +6,14 @@ from typing import Iterable, Set
 from domain.models import Plan, Operation
 from infra.config import load_rules, build_ext_map
 from infra.fs import ensure_session_dirs
+from utils.filters import is_ignorable
 
 IGNORE_SUFFIXES = (".crdownload", ".part", ".tmp", ".download")
 CATEGORY_NAMES = ("Images", "Videos", "Audios", "Documents", "Executables", "Archives", "Fonts", "Code")
 
-class SkipReason(Enum):
-    SUFFIX = auto()
-    NAME = auto()
-    GLOB = auto()
-    HIDDEN_ATTR = auto()
+# effective = load_ignore_rules(found_path)
 
-@dataclass(frozen=True)
-class IgnoreRules:
-    suffixes: tuple[str, ...] = field(default_factory=tuple)
-    names: tuple[str, ...] = field(default_factory=tuple)
-    globs: tuple[str, ...] = field(default_factory=tuple)
-    hidden: bool = True # whether hidden attributes should be taken into account
-
-BUILTIN_IGNORE = IgnoreRules(
-    suffixes=(".crdownload", ".part", ".tmp", ".download"),
-    names=("desktop.ini", ".ds_store", "thumbs.db"),
-    globs=("~$*", ".~lock.*#"),
-    hidden=True,
-)
-
-def is_ignorable(path: Path, rules: IgnoreRules) -> tuple[bool, Set[SkipReason] | None]:
-    SkipReason = enumerate("SUFFIX", "NAME", "GLOB", "HIDDEN_ATTR")
+# skip, reasons = is_ignorable(path, effective)
 
 def plan_downloads(downloads_dir: Path, rules_path: Path) -> Plan:
     session_ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
