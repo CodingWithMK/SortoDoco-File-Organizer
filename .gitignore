@@ -1,10 +1,61 @@
-# Python-generated files
+# --- Python ---
 __pycache__/
-*.py[oc]
-build/
+*.py[cod]
+*.so
+.build/
 dist/
+build/
 wheels/
-*.egg-info
+*.egg-info/
+.eggs/
 
-# Virtual environments
-.venv
+# --- Virtual envs ---
+.venv/
+.env/
+.venv*/
+env*/
+venv*/
+
+# --- Dependency locks (commit uv.lock if you use uv) ---
+# uv.lock  # UNCOMMENT to track exact deps across machines
+
+# --- Tooling caches ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# --- Editors/IDEs ---
+.vscode/
+.idea/
+.history/
+*.swp
+*.swo
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+
+# --- Logs & temp ---
+*.log
+*.tmp
+*.bak
+*.orig
+
+# --- Local data/sandboxes ---
+SANDBOX_*/
+SANDBOX*/
+**/tmp/
+**/temp/
+
+# --- App configs & secrets (tracked template, ignore real) ---
+.config/
+!.config/
+!.config/*.example
+# If you keep the folder but ignore real files:
+.config/*.toml
+.config/*.json
+# Allow the example file to be tracked:
+!.config/config.toml.example
