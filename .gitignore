@@ -51,6 +51,7 @@ SANDBOX*/
 **/temp/
 
 # --- App configs & secrets (tracked template, ignore real) ---
+src/.config/config.toml
 .config/
 !.config/
 !.config/*.example
