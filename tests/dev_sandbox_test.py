@@ -2,6 +2,9 @@ from pathlib import Path
 import sys, shutil
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+BASE_DIR = Path(__file__).resolve().parent.parent
+RULES_DIR = BASE_DIR.parent / "rules"
+
 SRC_ROOT  = REPO_ROOT / "src"
 sys.path.insert(0, str(SRC_ROOT))
 
@@ -25,7 +28,7 @@ def print_plan(plan: Plan):
 
 if __name__ == "__main__":
     sandbox    = REPO_ROOT / "SANDBOX_DOWNLOADS"
-    rules_path = SRC_ROOT / "rules" / "extensions.json"
+    rules_path = RULES_DIR / "extensions.json"
     
     # 1) Clean & Setup
     if sandbox.exists():
